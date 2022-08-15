@@ -1,0 +1,55 @@
+{
+  "name": "smart-dato/non-solo-cap",
+  "description": "A set of tools to make working with https://www.nonsolocap.it/ easier in Laravel",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "role": "Developer",
+      "name": "SmartDato",
+      "email": "info@smart-dato.com",
+      "homepage": "https://smart-dato.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "SmartDato\\NonSoloCap\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SmartDato\\NonSoloCap\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SmartDato\\NonSoloCap\\Providers\\NonSoloCapServiceProvider"
+      ],
+      "aliases": {
+        "NonSoloCap": "SmartDato\\NonSoloCap\\Facades\\NonSoloCap"
+      }
+    }
+  },
+  "require": {
+    "php": "^8.0.2",
+    "illuminate/support": "^9.24"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist",
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "require-dev": {
+    "laravel/pint": "^1.1",
+    "orchestra/testbench": "^7.6",
+    "pestphp/pest": "^1.21",
+    "phpstan/phpstan": "^1.8",
+    "phpunit/phpunit": "^9.5"
+  }
+}
