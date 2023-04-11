@@ -2,7 +2,7 @@
 
 namespace SmartDato\NonSoloCap\Services;
 
-use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class NonSoloCap
 {
@@ -12,20 +12,35 @@ class NonSoloCap
     /** @var string not_found */
     private const not_found = 'non ha prodotto risultati.';
 
-    public static function generateUrl(string|int $zipcode = '', string $location = ''): string
-    {
-        return "self::base?k=$zipcode&c=$location";
+    public static function generateUrl(
+        string|int $zipcode = '',
+        string $location = ''
+    ): string {
+        return self::base."?k=$zipcode&c=$location";
     }
 
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public static function validZipcode(string|int $zipcode): bool
     {
-        $response = Http::get(self::base.'/cap', [
-            'k' => $zipcode,
-            'b' => '',
-            'c' => '',
+        $client = new Client([
+            'base_uri' => self::base
         ]);
 
-        return ! str($response->body()) // @phpstan-ignore-line
-            ->contains(self::not_found);
+        $response = $client->get(
+            uri: '/cap',
+            options: [
+                'query' => [
+                    'k' => $zipcode,
+                    'b' => '',
+                    'c' => '',
+                ]
+            ]
+        );
+
+        $body = (string) $response->getBody();
+
+        return ! str_contains($body, self::not_found);
     }
 }
